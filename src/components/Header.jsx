@@ -17,7 +17,16 @@ const Header = ({ searchQuery, setSearchQuery }) => {
   }, []);
 
   return (
-    <header className="sticky top-0 z-50 w-full glass rounded-none border-x-0 border-t-0 p-4 px-6 md:px-12 flex flex-col gap-4">
+    <header 
+      className="sticky top-0 w-full p-4 px-6 md:px-12 flex flex-col gap-4"
+      style={{
+        zIndex: 50,
+        backgroundColor: 'rgba(10, 10, 10, 0.8)',
+        backdropFilter: 'blur(10px)',
+        WebkitBackdropFilter: 'blur(10px)',
+        borderBottom: '1px solid rgba(212, 175, 55, 0.3)'
+      }}
+    >
       {/* Top Banner Bismillah */}
       <div className="w-full text-center arabic-text text-gold" style={{ fontStyle: 'italic', opacity: 0.8, letterSpacing: '2px', fontSize: '1.4rem' }}>
         بسم الله الرحمن الرحيم

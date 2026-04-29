@@ -31,7 +31,7 @@ const Hub = () => {
       <div className="star-field" />
       <Header searchQuery={searchQuery} setSearchQuery={setSearchQuery} />
 
-      <main className="p-8 md:p-12 lg:p-24 max-w-7xl mx-auto">
+      <main className="max-w-6xl mx-auto px-6 py-12 relative z-10 w-full" style={{ paddingTop: '2rem' }}>
         <motion.section
           className="mb-16"
           initial={{ opacity: 0, y: 30 }}
