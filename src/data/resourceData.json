@@ -1,0 +1,54 @@
+[
+  {
+    "category": "Main Guides",
+    "resources": [
+      {
+        "title": "35+ Ways to Monetize AI: Strategies & Tactics",
+        "label": "AL-IQTISAD (الاقتصاد)",
+        "description": "A comprehensive roadmap of high-ROI strategies to monetize AI agents and workflows.",
+        "slug": "ways-to-monetize-ai",
+        "icon": "💵"
+      },
+      {
+        "title": "100+ AI Monetization Workflows",
+        "label": "AL-MANHAJ (المنهج)",
+        "description": "Execution blueprints you can launch in under a week. From content pipelines to client agencies.",
+        "slug": "ai-monetization-workflows",
+        "icon": "💶"
+      },
+      {
+        "title": "30 Offline AI Business Ideas",
+        "label": "AL-WAQI (الواقع)",
+        "description": "Bridge the gap between digital AI and real-world services with proven offline strategies.",
+        "slug": "offline-ai-businesses",
+        "icon": "💷"
+      },
+      {
+        "title": "500+ Elite AI Prompts",
+        "label": "AL-KALIMA (الكلمة)",
+        "description": "The ultimate prompt engineering library for Writing, Marketing, and Sales excellence.",
+        "slug": "elite-ai-prompts",
+        "icon": "📋"
+      }
+    ]
+  },
+  {
+    "category": "Advanced Learning",
+    "resources": [
+      {
+        "title": "The GPT Mastery Handbook",
+        "label": "AL-MUALLIM (المعلم)",
+        "description": "Deep dive into prompt architecture, persona locking, chain-of-thought, and Custom GPT engineering.",
+        "slug": "gpt-mastery-handbook",
+        "icon": "📖"
+      },
+      {
+        "title": "Advanced AI Engineering Guide",
+        "label": "AL-HANDASA (الهندسة)",
+        "description": "Master RAG, fine-tuning, AI agents, and building full SaaS products with the OpenAI API.",
+        "slug": "advanced-ai-engineering",
+        "icon": "🚀"
+      }
+    ]
+  }
+]
