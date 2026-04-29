@@ -9,6 +9,46 @@ import { motion, AnimatePresence } from 'framer-motion';
 const Hub = () => {
   const [searchQuery, setSearchQuery] = useState('');
   const [resources, setResources] = useState([]);
+  const [balance, setBalance] = useState(0);
+  const [isBoosting, setIsBoosting] = useState(false);
+
+  // Expand Telegram WebApp on mount
+  useEffect(() => {
+    if (window.Telegram?.WebApp) {
+      window.Telegram.WebApp.expand();
+    }
+  }, []);
+
+  const handleMintBoost = () => {
+    if (window.Telegram?.WebApp?.HapticFeedback) {
+      window.Telegram.WebApp.HapticFeedback.impactOccurred('medium');
+    }
+    setIsBoosting(true);
+    
+    // Call the Monetag ad function (placeholder logic, usually it's a global function)
+    if (typeof window.show_8765432 === 'function') {
+      window.show_8765432()
+        .then(() => {
+          setBalance(prev => prev + 100);
+          if (window.Telegram?.WebApp) {
+            window.Telegram.WebApp.showAlert('Minting successful! +100 ⚡ added to your balance.');
+          }
+        })
+        .catch(err => console.error("Ad failed", err))
+        .finally(() => setIsBoosting(false));
+    } else {
+      // Fallback for testing if ad script is blocked or missing
+      setTimeout(() => {
+        setBalance(prev => prev + 100);
+        if (window.Telegram?.WebApp) {
+          window.Telegram.WebApp.showAlert('Minting successful! +100 ⚡ added to your balance.');
+        } else {
+          alert('Minting successful! +100 ⚡ added to your balance.');
+        }
+        setIsBoosting(false);
+      }, 1500);
+    }
+  };
 
   useEffect(() => {
     const flattened = rawData.reduce((acc, category) => {
@@ -33,29 +73,33 @@ const Hub = () => {
 
       <main className="max-w-6xl mx-auto px-6 py-12 relative z-10 w-full" style={{ paddingTop: '2rem' }}>
         <motion.section
-          className="mb-16"
+          className="mb-16 text-center"
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0, transition: { duration: 0.6 } }}
         >
-          <div className="hub-badge mb-4">SI | AL-HIKMA — <span className="arabic-text">الحكمة</span></div>
+          <div className="hub-badge mb-4">RAPIDMINT — OFFICIAL DASHBOARD</div>
           <h2 className="text-4xl md:text-6xl font-extrabold mb-3 tracking-tight">
-            The Ibrahim Library <br />
-            <span className="text-gold">Maktaba (<span className="arabic-text font-bold">المكتبة الإبراهيمية</span>)</span>
+            RapidMint <br />
+            <span className="text-primary">Ecosystem</span>
           </h2>
           
-          <div className="mb-8 mt-1">
-            <a 
-              href="https://www.linkedin.com/in/shaikh-ibrahim17/"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="linkedin-link"
+          <div className="mb-8 mt-4 glass p-6 max-w-sm mx-auto flex flex-col items-center gap-4 border-primary">
+            <h3 className="text-xl font-bold text-on-surface-variant">Your Balance</h3>
+            <div className="text-5xl font-extrabold flex items-center gap-2 text-white">
+              {balance} <span className="text-yellow-400">⚡</span>
+            </div>
+            <button 
+              onClick={handleMintBoost}
+              disabled={isBoosting}
+              className="launch-btn w-full mt-2 text-lg py-3 flex items-center justify-center gap-2 font-bold"
+              style={{ backgroundColor: '#22c55e', borderColor: '#22c55e', color: '#1a1a1a', opacity: isBoosting ? 0.7 : 1 }}
             >
-              [ Tawasul (<span className="arabic-text">تواصل</span>) | Connect Me on LinkedIn ]
-            </a>
+              {isBoosting ? 'Minting...' : 'Boost Mint +100 ⚡'}
+            </button>
           </div>
 
-          <p className="text-on-surface-variant text-lg max-w-2xl border-l-2 border-emerald pl-4 py-2">
-            A repository of elite AI blueprints, engineered for Ihsan (<span className="arabic-text text-gold">إحسان</span> — Excellence) and strategic growth.
+          <p className="text-on-surface-variant text-lg max-w-2xl mx-auto border-l-2 border-primary pl-4 py-2">
+            Accelerate your growth and earn rewards instantly with the high-performance RapidMint engine.
           </p>
         </motion.section>
 
@@ -95,9 +139,9 @@ const Hub = () => {
         )}
       </main>
 
-      <footer className="p-12 text-center text-sm" style={{ color: 'rgba(249, 245, 248, 0.7)' }}>
+      <footer className="p-12 text-center text-sm" style={{ color: 'rgba(255, 255, 255, 0.7)' }}>
         <p>
-          © 2026 Shaikh Ibrahim | The Muhandis (<span className="arabic-text text-gold" style={{ opacity: 1 }}>المهندس</span>) of the Ibrahim Maktaba
+          © 2026 RapidMint Ecosystem | All Rights Reserved
         </p>
       </footer>
     </div>

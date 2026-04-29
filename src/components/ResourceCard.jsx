@@ -24,6 +24,9 @@ const ResourceCard = ({ title, description, icon, slug, label }) => {
 
   const handleLaunch = (e) => {
     e.stopPropagation();
+    if (window.Telegram?.WebApp?.HapticFeedback) {
+      window.Telegram.WebApp.HapticFeedback.impactOccurred('light');
+    }
     navigate(`/vault/${slug}`);
   };
 
@@ -49,7 +52,12 @@ const ResourceCard = ({ title, description, icon, slug, label }) => {
       initial={{ opacity: 0, y: 24 }}
       animate={{ opacity: 1, y: 0, transition: { type: 'spring', stiffness: 160, damping: 20 } }}
       className="card-glass p-6 flex flex-col items-center text-center gap-4 group cursor-pointer"
-      onClick={() => navigate(`/vault/${slug}`)}
+      onClick={() => {
+        if (window.Telegram?.WebApp?.HapticFeedback) {
+          window.Telegram.WebApp.HapticFeedback.impactOccurred('light');
+        }
+        navigate(`/vault/${slug}`);
+      }}
     >
       {/* Gold shimmer top edge */}
       <div style={{
@@ -85,10 +93,10 @@ const ResourceCard = ({ title, description, icon, slug, label }) => {
 
       <button
         onClick={handleLaunch}
-        className="launch-btn w-full mt-4"
+        className="launch-btn w-full mt-4 flex items-center justify-center gap-2"
         style={{ marginTop: 'auto' }}
       >
-        Unveil Wisdom (<span className="arabic-text">اكشف الحكمة</span>) ↗
+        View Module ⚡
       </button>
     </motion.div>
   );

@@ -27,9 +27,9 @@ const Header = ({ searchQuery, setSearchQuery }) => {
         borderBottom: '1px solid rgba(212, 175, 55, 0.3)'
       }}
     >
-      {/* Top Banner Bismillah */}
-      <div className="w-full text-center arabic-text text-gold" style={{ fontStyle: 'italic', opacity: 0.8, letterSpacing: '2px', fontSize: '1.4rem' }}>
-        بسم الله الرحمن الرحيم
+      {/* Top Banner */}
+      <div className="w-full text-center text-primary" style={{ fontStyle: 'italic', opacity: 0.8, letterSpacing: '2px', fontSize: '1.2rem', fontWeight: 'bold' }}>
+        WELCOME TO THE ECOSYSTEM
       </div>
 
       <div className="flex flex-col md:flex-row items-center justify-between gap-4 w-full">
@@ -37,10 +37,10 @@ const Header = ({ searchQuery, setSearchQuery }) => {
         <div className="flex items-center gap-3">
           <div className="w-8 h-8 rounded-full bg-gradient-to-tr from-emerald to-gold shadow-[0_0_12px_#d4af37]" />
           <div>
-            <h1 className="text-2xl font-extrabold tracking-tighter bg-clip-text text-transparent bg-gradient-to-r from-white to-gold">
-              SI | AL-HIKMA
+            <h1 className="text-2xl font-extrabold tracking-tighter bg-clip-text text-transparent bg-gradient-to-r from-white to-primary">
+              RapidMint
             </h1>
-            <p className="text-xs text-on-surface-variant font-bold tracking-widest"><span className="arabic-text text-gold">الحكمة</span> — The Wisdom</p>
+            <p className="text-xs text-on-surface-variant font-bold tracking-widest"><span className="text-primary">Ecosystem</span> — Dashboard</p>
           </div>
         </div>
 
@@ -50,7 +50,7 @@ const Header = ({ searchQuery, setSearchQuery }) => {
           <input
             ref={inputRef}
             type="text"
-            placeholder="Seek Knowledge... (اطلب العلم)"
+            placeholder="Search the ecosystem..."
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
             className="search-input"
