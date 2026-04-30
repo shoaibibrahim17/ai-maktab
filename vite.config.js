@@ -1,8 +1,14 @@
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
+import legacy from '@vitejs/plugin-legacy'
 
 // https://vite.dev/config/
 export default defineConfig({
-  base: '/ai-maktab/', // Explicitly match repository name for GH Pages subpath
-  plugins: [react()],
+  base: '', // Empty string for relative path support across all environments
+  plugins: [
+    react(),
+    legacy({
+      targets: ['defaults', 'not IE 11'],
+    }),
+  ],
 })

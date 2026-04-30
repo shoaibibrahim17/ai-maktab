@@ -12,13 +12,25 @@
     <!-- Telegram WebApp -->
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
   </head>
-  <body>
+  <body style="background: #1a1a1a; margin: 0; padding: 0; color: white;">
     <div id="root">
-      <div id="debug-overlay" style="color: white; padding: 20px; font-family: sans-serif;">
-        <h1 style="font-size: 1.2rem;">⚡ AI-MAKTABA Initializing...</h1>
-        <p style="font-size: 0.8rem; opacity: 0.5;">If this screen stays for more than 5 seconds, please check your internet connection or restart the bot.</p>
+      <div id="debug-overlay" style="padding: 40px; font-family: sans-serif; text-align: center;">
+        <h1 style="font-size: 2rem; color: #22c55e;">⚡ AL-MAKTABA</h1>
+        <p style="opacity: 0.8;">Loading Secure Vault...</p>
+        <div style="margin-top: 20px; font-size: 0.7rem; opacity: 0.4;">
+          Status: Core HTML Loaded
+        </div>
       </div>
     </div>
+
+    <!-- Move scripts to bottom for non-blocking render -->
+    <!-- Telegram WebApp -->
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
+    <!-- Monetag Smart Tag -->
+    <script src="https://alwingulla.com/88/p.js" async data-pjax></script>
+    <!-- Ad SDK -->
+    <script src='https://libtl.com/sdk.js' data-zone='10941971' data-sdk='show_10941971'></script>
+    <!-- React Entry -->
     <script type="module" src="/src/main.jsx"></script>
   </body>
 </html>
