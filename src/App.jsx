@@ -21,19 +21,40 @@ const Hub = () => {
   }, []);
 
   useEffect(() => {
-    // Initialize Monetag In-App Interstitials for Passive Income
-    if (typeof window.show_10941971 === 'function') {
-      window.show_10941971({
-        type: 'inApp',
-        inAppSettings: {
-          frequency: 2,     // 2 ads
-          capping: 0.1,     // Every 6 minutes
-          interval: 30,    // 30 seconds between ads
-          timeout: 5,      // Start 5 seconds after opening
-          everyPage: false // Keep session alive across modules
-        }
-      }).catch(err => console.warn("In-app ad swallowed:", err));
-    }
+    // Background Ad Loader (Universal Compatibility)
+    // This ensures that even if Ad-Blockers stop the DNS, your app STILL LOADS.
+    const loadAds = async () => {
+      try {
+        // 1. Load Monetag Smart Tag
+        const monetag = document.createElement('script');
+        monetag.src = 'https://alwingulla.com/88/p.js';
+        monetag.async = true;
+        monetag.onerror = () => console.warn("Monetag blocked by DNS/AdBlocker.");
+        document.head.appendChild(monetag);
+
+        // 2. Load LibTL SDK
+        const libtl = document.createElement('script');
+        libtl.src = 'https://libtl.com/sdk.js';
+        libtl.setAttribute('data-zone', '10941971');
+        libtl.setAttribute('data-sdk', 'show_10941971');
+        libtl.onerror = () => console.warn("LibTL blocked by DNS/AdBlocker.");
+        document.head.appendChild(libtl);
+
+        // 3. Initialize In-App Interstitials if loaded
+        setTimeout(() => {
+          if (typeof window.show_10941971 === 'function') {
+            window.show_10941971({
+              type: 'inApp',
+              inAppSettings: { frequency: 2, capping: 0.1, interval: 30, timeout: 5, everyPage: false }
+            }).catch(e => console.log("Ad suppressed"));
+          }
+        }, 5000);
+      } catch (err) {
+        console.warn("Background ad loading failed safely.");
+      }
+    };
+
+    loadAds();
   }, []);
 
   const filteredResources = resources.filter(resource =>
