@@ -5,7 +5,6 @@ import ResourceCard from './components/ResourceCard';
 import VaultViewer from './components/VaultViewer';
 import RapidMint from './components/RapidMint';
 import rawData from './data/resourceData.json';
-import { motion, AnimatePresence } from 'framer-motion';
 
 const Hub = () => {
   const [searchQuery, setSearchQuery] = useState('');
@@ -40,10 +39,8 @@ const Hub = () => {
       <Header searchQuery={searchQuery} setSearchQuery={setSearchQuery} />
 
       <main className="max-w-6xl mx-auto px-6 py-12 relative z-10 w-full" style={{ paddingTop: '2rem' }}>
-        <motion.section
-          className="mb-16"
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0, transition: { duration: 0.6 } }}
+        <section
+          className="mb-16 animate-fade-in-up"
         >
           {/* RapidMint Dashboard Entry */}
           <div className="mb-12">
@@ -54,7 +51,7 @@ const Hub = () => {
                 }
                 navigate('/rapidmint');
               }}
-              className="w-full glass p-6 flex flex-col md:flex-row items-center justify-between gap-4 border-primary hover:bg-[rgba(34,197,94,0.1)] transition-colors group"
+              className="w-full glass p-6 flex flex-col md:flex-row items-center justify-between gap-4 border-emerald hover:bg-[rgba(34,197,94,0.1)] transition-colors group"
             >
               <div className="flex items-center gap-4">
                 <div className="w-12 h-12 rounded-full bg-gradient-to-tr from-[#22c55e] to-[#4ade80] flex items-center justify-center text-2xl shadow-[0_0_15px_rgba(34,197,94,0.5)] group-hover:scale-110 transition-transform">⚡</div>
@@ -89,36 +86,33 @@ const Hub = () => {
           <p className="text-on-surface-variant text-lg max-w-2xl border-l-2 border-emerald pl-4 py-2">
             A repository of elite AI blueprints, engineered for Ihsan (<span className="arabic-text text-gold">إحسان</span> — Excellence) and strategic growth.
           </p>
-        </motion.section>
+        </section>
 
-        <AnimatePresence mode="wait">
-          {categories.map((category, ci) => (
-            <motion.section
-              key={category}
-              className="mb-16"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1, transition: { delay: ci * 0.1 } }}
-            >
-              <div style={{ width: '100%', marginBottom: '1.5rem' }}>
-                <div className="category-label">{category}</div>
-              </div>
-              <div className="card-grid">
-                {filteredResources
-                  .filter(r => r.category === category)
-                  .map((resource, index) => (
-                    <ResourceCard
-                      key={`${resource.slug}-${index}`}
-                      title={resource.title}
-                      label={resource.label}
-                      description={resource.description}
-                      icon={resource.icon}
-                      slug={resource.slug}
-                    />
-                  ))}
-              </div>
-            </motion.section>
-          ))}
-        </AnimatePresence>
+        {categories.map((category, ci) => (
+          <section
+            key={category}
+            className="mb-16 animate-fade-in-up"
+            style={{ animationDelay: `${ci * 0.1}s`, opacity: 0, animationFillMode: 'forwards' }}
+          >
+            <div style={{ width: '100%', marginBottom: '1.5rem' }}>
+              <div className="category-label">{category}</div>
+            </div>
+            <div className="card-grid">
+              {filteredResources
+                .filter(r => r.category === category)
+                .map((resource, index) => (
+                  <ResourceCard
+                    key={`${resource.slug}-${index}`}
+                    title={resource.title}
+                    label={resource.label}
+                    description={resource.description}
+                    icon={resource.icon}
+                    slug={resource.slug}
+                  />
+                ))}
+            </div>
+          </section>
+        ))}
 
         {filteredResources.length === 0 && (
           <div className="py-20 text-center glass">

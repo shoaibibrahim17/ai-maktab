@@ -1,6 +1,5 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { motion } from 'framer-motion';
 
 const RapidMint = () => {
   const navigate = useNavigate();
@@ -57,10 +56,8 @@ const RapidMint = () => {
     <div className="min-h-screen bg-[#1a1a1a] text-white flex flex-col items-center justify-center p-6">
       <div className="star-field" />
       
-      <motion.div 
-        className="glass p-8 max-w-sm w-full flex flex-col items-center gap-6 border-primary relative z-10"
-        initial={{ opacity: 0, scale: 0.9 }}
-        animate={{ opacity: 1, scale: 1 }}
+      <div 
+        className="glass p-8 max-w-sm w-full flex flex-col items-center gap-6 border-primary relative z-10 animate-fade-in-up"
       >
         <button 
           onClick={() => navigate('/')}
@@ -75,16 +72,8 @@ const RapidMint = () => {
         </div>
 
         <div className="relative mt-4">
-          <motion.div 
-            className="w-32 h-32 rounded-full bg-gradient-to-tr from-[#22c55e] to-[#4ade80] shadow-[0_0_40px_#22c55e]"
-            animate={{ 
-              rotateY: 360,
-              scale: [1, 1.05, 1],
-            }}
-            transition={{ 
-              rotateY: { duration: 4, repeat: Infinity, ease: "linear" },
-              scale: { duration: 2, repeat: Infinity, ease: "easeInOut" }
-            }}
+          <div 
+            className="w-32 h-32 rounded-full bg-gradient-to-tr from-[#22c55e] to-[#4ade80] shadow-[0_0_40px_#22c55e] animate-coin"
           />
           <div className="absolute inset-0 flex items-center justify-center text-4xl">⚡</div>
         </div>
@@ -114,7 +103,7 @@ const RapidMint = () => {
         <p className="text-sm opacity-60 text-center">
           Watch a short ad to accelerate your minting speed and earn rewards instantly.
         </p>
-      </motion.div>
+      </div>
 
       <footer className="mt-12 text-center text-xs opacity-40">
         © 2026 RapidMint Ecosystem | All Rights Reserved

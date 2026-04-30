@@ -1,25 +1,20 @@
-import { motion, useMotionValue, useTransform, useSpring } from 'framer-motion';
-import { useRef } from 'react';
+import { useState, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 const ResourceCard = ({ title, description, icon, slug, label }) => {
   const ref = useRef(null);
   const navigate = useNavigate();
-  const x = useMotionValue(0);
-  const y = useMotionValue(0);
-
-  const rotateX = useSpring(useTransform(y, [-60, 60], [6, -6]), { stiffness: 200, damping: 30 });
-  const rotateY = useSpring(useTransform(x, [-60, 60], [-6, 6]), { stiffness: 200, damping: 30 });
+  const [tilt, setTilt] = useState({ x: 0, y: 0 });
 
   const handleMouseMove = (e) => {
     const rect = ref.current.getBoundingClientRect();
-    x.set(e.clientX - rect.left - rect.width / 2);
-    y.set(e.clientY - rect.top - rect.height / 2);
+    const x = ((e.clientX - rect.left) / rect.width - 0.5) * 12; // Max 6deg
+    const y = ((e.clientY - rect.top) / rect.height - 0.5) * -12;
+    setTilt({ x, y });
   };
 
   const handleMouseLeave = () => {
-    x.set(0);
-    y.set(0);
+    setTilt({ x: 0, y: 0 });
   };
 
   const handleLaunch = (e) => {
@@ -40,18 +35,14 @@ const ResourceCard = ({ title, description, icon, slug, label }) => {
   };
 
   return (
-    <motion.div
+    <div
       ref={ref}
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
-      style={{ rotateX, rotateY, transformStyle: 'preserve-3d', perspective: 800 }}
-      whileHover={{
-        y: -20,
-        transition: { type: 'spring', stiffness: 180, damping: 14, mass: 0.6 }
+      style={{ 
+        transform: `perspective(800px) rotateX(${tilt.y}deg) rotateY(${tilt.x}deg)`,
       }}
-      initial={{ opacity: 0, y: 24 }}
-      animate={{ opacity: 1, y: 0, transition: { type: 'spring', stiffness: 160, damping: 20 } }}
-      className="card-glass p-6 flex flex-col items-center text-center gap-4 group cursor-pointer"
+      className="card-glass p-6 flex flex-col items-center text-center gap-4 group cursor-pointer tilt-container animate-fade-in-up"
       onClick={() => {
         if (window.Telegram?.WebApp?.HapticFeedback) {
           window.Telegram.WebApp.HapticFeedback.impactOccurred('light');
@@ -98,7 +89,7 @@ const ResourceCard = ({ title, description, icon, slug, label }) => {
       >
         Unveil Wisdom (<span className="arabic-text">اكشف الحكمة</span>) ↗
       </button>
-    </motion.div>
+    </div>
   );
 };
 
