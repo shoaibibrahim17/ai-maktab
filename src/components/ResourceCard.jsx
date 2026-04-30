@@ -1,5 +1,6 @@
 import { useState, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { safeHaptic } from '../utils/tgHelpers';
 
 const ResourceCard = ({ title, description, icon, slug, label }) => {
   const ref = useRef(null);
@@ -19,9 +20,7 @@ const ResourceCard = ({ title, description, icon, slug, label }) => {
 
   const handleLaunch = (e) => {
     e.stopPropagation();
-        if (window.Telegram?.WebApp?.HapticFeedback) {
-          window.Telegram.WebApp.HapticFeedback.impactOccurred('medium');
-        }
+    safeHaptic('medium');
     navigate(`/vault/${slug}`);
   };
 
@@ -44,9 +43,7 @@ const ResourceCard = ({ title, description, icon, slug, label }) => {
       }}
       className="card-glass p-6 flex flex-col items-center text-center gap-4 group cursor-pointer tilt-container animate-fade-in-up"
       onClick={() => {
-        if (window.Telegram?.WebApp?.HapticFeedback) {
-          window.Telegram.WebApp.HapticFeedback.impactOccurred('medium');
-        }
+        safeHaptic('medium');
         navigate(`/vault/${slug}`);
       }}
     >

@@ -6,6 +6,8 @@ import VaultViewer from './components/VaultViewer';
 import RapidMint from './components/RapidMint';
 import rawData from './data/resourceData.json';
 
+import { safeHaptic } from './utils/tgHelpers';
+
 const Hub = () => {
   const [searchQuery, setSearchQuery] = useState('');
   const [resources, setResources] = useState([]);
@@ -19,8 +21,9 @@ const Hub = () => {
   }, []);
 
   useEffect(() => {
-    if (window.Telegram?.WebApp) {
-      window.Telegram.WebApp.expand();
+    const tg = window.Telegram?.WebApp;
+    if (tg) {
+      tg.expand();
     }
     
     // Initialize Monetag In-App Interstitials for Passive Income
@@ -60,9 +63,7 @@ const Hub = () => {
           <div className="mb-12">
             <button 
               onClick={() => {
-                if (window.Telegram?.WebApp?.HapticFeedback) {
-                  window.Telegram.WebApp.HapticFeedback.impactOccurred('medium');
-                }
+                safeHaptic('medium');
                 navigate('/rapidmint');
               }}
               className="w-full glass p-6 flex flex-col md:flex-row items-center justify-between gap-4 border-emerald hover:bg-[rgba(34,197,94,0.1)] transition-colors group"

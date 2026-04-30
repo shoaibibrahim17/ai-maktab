@@ -1,8 +1,11 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { safeNotify, safeHaptic, safeSuccessHaptic } from '../utils/tgHelpers';
 
 const RapidMint = () => {
   const navigate = useNavigate();
+  
+  // Use localStorage as primary storage (API 6.0 compatible)
   const [balance, setBalance] = useState(() => {
     const saved = localStorage.getItem('rapidmint_balance');
     return saved ? parseInt(saved, 10) : 0;
@@ -16,62 +19,50 @@ const RapidMint = () => {
   }, [balance]);
 
   useEffect(() => {
-    if (window.Telegram?.WebApp) {
-      window.Telegram.WebApp.expand();
+    const tg = window.Telegram?.WebApp;
+    if (tg) {
+      tg.expand();
     }
   }, []);
 
   const handleBoostClick = () => {
     // 1. Check if the Monetag script is loaded
     if (typeof window.show_10941971 === 'function') {
-      if (window.Telegram?.WebApp?.HapticFeedback) {
-        window.Telegram.WebApp.HapticFeedback.impactOccurred('medium');
-      }
+      safeHaptic('medium');
       setIsBoosting(true);
       
       // 2. Call the Rewarded Interstitial
       window.show_10941971().then(() => {
-        // 3. This runs ONLY if the user finishes the ad
+        // 3. UPDATE BALANCE FIRST (Not tied to popup display)
         const reward = 100 * multiplier;
         setBalance(prev => prev + reward);
         
-        // 4. Use Telegram UI to confirm
-        if (window.Telegram?.WebApp) {
-          window.Telegram.WebApp.showAlert(`Success! +${reward} ⚡ added to your balance.`);
-          window.Telegram.WebApp.HapticFeedback.notificationOccurred('success');
-        }
+        // 4. Notify user with fallback support
+        safeNotify(`Success! +${reward} ⚡ added to your balance.`);
+        safeSuccessHaptic();
+        
       }).catch((err) => {
         // If the ad fails or is closed early
-        if (window.Telegram?.WebApp) {
-          window.Telegram.WebApp.showAlert("Ad not completed. No reward issued.");
-        }
+        safeNotify("Ad not completed. No reward issued.");
       }).finally(() => setIsBoosting(false));
     } else {
-      if (window.Telegram?.WebApp) {
-        window.Telegram.WebApp.showAlert("Ad is still loading... try again in 5 seconds.");
-      }
+      safeNotify("Ad is still loading... try again in 5 seconds.");
     }
   };
 
   const handleSuperBoost = () => {
-    if (window.Telegram?.WebApp?.HapticFeedback) {
-      window.Telegram.WebApp.HapticFeedback.impactOccurred('heavy');
-    }
+    safeHaptic('heavy');
     setIsSuperBoosting(true);
 
     if (typeof window.show_10941971 === 'function') {
-      // Reward popup for multiplier
       window.show_10941971('pop')
         .then(() => {
           setMultiplier(5);
-          if (window.Telegram?.WebApp) {
-            window.Telegram.WebApp.showAlert("🔥 SUPER BOOST ACTIVE! All mints are now 5X for this session!");
-          }
+          safeNotify("🔥 SUPER BOOST ACTIVE! All mints are now 5X for this session!");
+          safeSuccessHaptic();
         })
         .catch(err => {
-          if (window.Telegram?.WebApp) {
-            window.Telegram.WebApp.showAlert("Super Boost failed to load. Please try again later.");
-          }
+          safeNotify("Super Boost failed to load. Please try again later.");
         })
         .finally(() => setIsSuperBoosting(false));
     } else {
@@ -89,9 +80,7 @@ const RapidMint = () => {
       >
         <button 
           onClick={() => {
-            if (window.Telegram?.WebApp?.HapticFeedback) {
-              window.Telegram.WebApp.HapticFeedback.impactOccurred('medium');
-            }
+            safeHaptic('medium');
             navigate('/');
           }}
           className="back-btn absolute top-4 left-4"

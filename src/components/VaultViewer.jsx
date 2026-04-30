@@ -2,6 +2,7 @@ import { useParams, useNavigate } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
+import { safeHaptic } from '../utils/tgHelpers';
 
 const VaultViewer = () => {
   const { slug } = useParams();
@@ -51,9 +52,7 @@ const VaultViewer = () => {
         <div className="flex items-center gap-4">
           <button
             onClick={() => {
-              if (window.Telegram?.WebApp?.HapticFeedback) {
-                window.Telegram.WebApp.HapticFeedback.impactOccurred('medium');
-              }
+              safeHaptic('medium');
               navigate('/');
             }}
             className="back-btn flex items-center gap-2"
