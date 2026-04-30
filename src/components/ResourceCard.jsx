@@ -19,9 +19,9 @@ const ResourceCard = ({ title, description, icon, slug, label }) => {
 
   const handleLaunch = (e) => {
     e.stopPropagation();
-    if (window.Telegram?.WebApp?.HapticFeedback) {
-      window.Telegram.WebApp.HapticFeedback.impactOccurred('light');
-    }
+        if (window.Telegram?.WebApp?.HapticFeedback) {
+          window.Telegram.WebApp.HapticFeedback.impactOccurred('medium');
+        }
     navigate(`/vault/${slug}`);
   };
 
@@ -45,7 +45,7 @@ const ResourceCard = ({ title, description, icon, slug, label }) => {
       className="card-glass p-6 flex flex-col items-center text-center gap-4 group cursor-pointer tilt-container animate-fade-in-up"
       onClick={() => {
         if (window.Telegram?.WebApp?.HapticFeedback) {
-          window.Telegram.WebApp.HapticFeedback.impactOccurred('light');
+          window.Telegram.WebApp.HapticFeedback.impactOccurred('medium');
         }
         navigate(`/vault/${slug}`);
       }}

@@ -50,7 +50,12 @@ const VaultViewer = () => {
         </div>
         <div className="flex items-center gap-4">
           <button
-            onClick={() => navigate('/')}
+            onClick={() => {
+              if (window.Telegram?.WebApp?.HapticFeedback) {
+                window.Telegram.WebApp.HapticFeedback.impactOccurred('medium');
+              }
+              navigate('/');
+            }}
             className="back-btn flex items-center gap-2"
           >
             ← SI | AL-MAKTABA (The Library)

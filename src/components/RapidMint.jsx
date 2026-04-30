@@ -62,7 +62,12 @@ const RapidMint = () => {
         className="glass p-8 max-w-sm w-full flex flex-col items-center gap-6 border-primary relative z-10 animate-fade-in-up"
       >
         <button 
-          onClick={() => navigate('/')}
+          onClick={() => {
+            if (window.Telegram?.WebApp?.HapticFeedback) {
+              window.Telegram.WebApp.HapticFeedback.impactOccurred('medium');
+            }
+            navigate('/');
+          }}
           className="back-btn absolute top-4 left-4"
           style={{ borderColor: '#22c55e', color: '#22c55e' }}
         >
