@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Routes, Route, useNavigate } from 'react-router-dom';
+import { Routes, Route, useNavigate, useLocation } from 'react-router-dom';
 import Header from './components/Header';
 import ResourceCard from './components/ResourceCard';
 import VaultViewer from './components/VaultViewer';
@@ -21,11 +21,6 @@ const Hub = () => {
   }, []);
 
   useEffect(() => {
-    const tg = window.Telegram?.WebApp;
-    if (tg) {
-      tg.expand();
-    }
-    
     // Initialize Monetag In-App Interstitials for Passive Income
     if (typeof window.show_10941971 === 'function') {
       window.show_10941971({
@@ -146,6 +141,40 @@ const Hub = () => {
 };
 
 function App() {
+  const navigate = useNavigate();
+  const location = useLocation();
+
+  useEffect(() => {
+    const tg = window.Telegram?.WebApp;
+    if (tg) {
+      tg.ready();
+      tg.expand();
+      
+      if (tg.setHeaderColor) {
+        tg.setHeaderColor('#1a1a1a');
+      }
+    }
+  }, []);
+
+  useEffect(() => {
+    const tg = window.Telegram?.WebApp;
+    if (tg && tg.BackButton) {
+      if (location.pathname === '/') {
+        tg.BackButton.hide();
+      } else {
+        tg.BackButton.show();
+        tg.BackButton.onClick(() => {
+          navigate(-1);
+        });
+      }
+    }
+    return () => {
+      if (tg?.BackButton) {
+        tg.BackButton.offClick();
+      }
+    };
+  }, [location.pathname, navigate]);
+
   return (
     <Routes>
       <Route path="/" element={<Hub />} />
