@@ -199,6 +199,8 @@ function App() {
       <Route path="/" element={<Hub />} />
       <Route path="/rapidmint" element={<RapidMint />} />
       <Route path="/vault/:slug" element={<VaultViewer />} />
+      {/* Catch-all to handle Telegram hash parameters or invalid routes */}
+      <Route path="*" element={<Hub />} />
     </Routes>
   );
 }
