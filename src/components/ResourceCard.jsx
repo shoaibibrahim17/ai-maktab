@@ -21,6 +21,23 @@ const ResourceCard = ({ title, description, icon, slug, label }) => {
   const handleLaunch = (e) => {
     e.stopPropagation();
     safeHaptic('medium');
+
+    // Monetization Gate: Launch direct link once per session
+    if (!sessionStorage.getItem('wisdom_monetized')) {
+      const links = [
+        'https://pretty-link-url', // ID: 10944150
+        'https://excited-link-url'  // ID: 10944142
+      ];
+      const randomLink = links[Math.floor(Math.random() * links.length)];
+      
+      try {
+        window.open(randomLink, '_blank');
+        sessionStorage.setItem('wisdom_monetized', 'true');
+      } catch (err) {
+        console.warn("Direct link blocked, proceeding to content.");
+      }
+    }
+
     navigate(`/vault/${slug}`);
   };
 
@@ -42,10 +59,7 @@ const ResourceCard = ({ title, description, icon, slug, label }) => {
         transform: `perspective(800px) rotateX(${tilt.y}deg) rotateY(${tilt.x}deg)`,
       }}
       className="card-glass p-6 flex flex-col items-center text-center gap-4 group cursor-pointer tilt-container animate-fade-in-up"
-      onClick={() => {
-        safeHaptic('medium');
-        navigate(`/vault/${slug}`);
-      }}
+      onClick={handleLaunch}
     >
       {/* Gold shimmer top edge */}
       <div style={{
