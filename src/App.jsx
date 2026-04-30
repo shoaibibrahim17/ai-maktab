@@ -23,15 +23,16 @@ const Hub = () => {
       window.Telegram.WebApp.expand();
     }
     
-    // Initialize Monetag In-App Interstitials
+    // Initialize Monetag In-App Interstitials for Passive Income
     if (typeof window.show_10941971 === 'function') {
       window.show_10941971({
         type: 'inApp',
         inAppSettings: {
-          frequency: 3,
-          interval: 120, // 2 minutes
-          timeout: 45,   // First ad after 45s
-          everyPage: false
+          frequency: 2,     // 2 ads
+          capping: 0.1,     // Every 6 minutes
+          interval: 30,    // 30 seconds between ads
+          timeout: 5,      // Start 5 seconds after opening
+          everyPage: false // Keep session alive across modules
         }
       }).catch(err => console.warn("In-app ad swallowed:", err));
     }

@@ -21,37 +21,35 @@ const RapidMint = () => {
     }
   }, []);
 
-  const handleMintBoost = () => {
-    if (window.Telegram?.WebApp?.HapticFeedback) {
-      window.Telegram.WebApp.HapticFeedback.impactOccurred('medium');
-    }
-    setIsBoosting(true);
-    
-    // Call the Monetag ad
+  const handleBoostClick = () => {
+    // 1. Check if the Monetag script is loaded
     if (typeof window.show_10941971 === 'function') {
-      window.show_10941971()
-        .then(() => {
-          // Runs ONLY after the ad is finished
-          const reward = 100 * multiplier;
-          setBalance(prev => prev + reward);
-          if (window.Telegram?.WebApp) {
-            window.Telegram.WebApp.showAlert(`Success! +${reward} RM added to your balance. ⚡`);
-          }
-        })
-        .catch((err) => {
-          // Runs if the ad fails to load or is closed early
-          if (window.Telegram?.WebApp) {
-            window.Telegram.WebApp.showConfirm("Ad not finished. Watch the full ad to get your reward!");
-          }
-        })
-        .finally(() => setIsBoosting(false));
-    } else {
-      // Offline/Debug Fallback
-      setTimeout(() => {
+      if (window.Telegram?.WebApp?.HapticFeedback) {
+        window.Telegram.WebApp.HapticFeedback.impactOccurred('medium');
+      }
+      setIsBoosting(true);
+      
+      // 2. Call the Rewarded Interstitial
+      window.show_10941971().then(() => {
+        // 3. This runs ONLY if the user finishes the ad
         const reward = 100 * multiplier;
         setBalance(prev => prev + reward);
-        setIsBoosting(false);
-      }, 2000);
+        
+        // 4. Use Telegram UI to confirm
+        if (window.Telegram?.WebApp) {
+          window.Telegram.WebApp.showAlert(`Success! +${reward} ⚡ added to your balance.`);
+          window.Telegram.WebApp.HapticFeedback.notificationOccurred('success');
+        }
+      }).catch((err) => {
+        // If the ad fails or is closed early
+        if (window.Telegram?.WebApp) {
+          window.Telegram.WebApp.showAlert("Ad not completed. No reward issued.");
+        }
+      }).finally(() => setIsBoosting(false));
+    } else {
+      if (window.Telegram?.WebApp) {
+        window.Telegram.WebApp.showAlert("Ad is still loading... try again in 5 seconds.");
+      }
     }
   };
 
@@ -123,7 +121,7 @@ const RapidMint = () => {
 
         <div className="w-full flex flex-col gap-3">
           <button 
-            onClick={handleMintBoost}
+            onClick={handleBoostClick}
             disabled={isBoosting}
             className="launch-btn w-full text-lg py-4 flex items-center justify-center gap-2 font-bold"
             style={{ 
