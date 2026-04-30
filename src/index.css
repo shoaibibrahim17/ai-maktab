@@ -215,6 +215,14 @@ h1, h2, h3, h4 {
 .max-w-2xl { max-width: 42rem; }
 .max-w-7xl { max-width: 80rem; }
 .mx-auto { margin-left: auto; margin-right: auto; }
+.min-h-screen { min-height: 100vh; }
+.text-white { color: #f9f5f8; }
+.opacity-10 { opacity: 0.1; }
+.opacity-20 { opacity: 0.2; }
+.opacity-40 { opacity: 0.4; }
+.opacity-60 { opacity: 0.6; }
+.opacity-70 { opacity: 0.7; }
+.opacity-80 { opacity: 0.8; }
 .grid { display: grid; }
 /* Default single column — overridden by .card-grid */
 .grid-cols-1 { grid-template-columns: repeat(1, minmax(0, 1fr)); }

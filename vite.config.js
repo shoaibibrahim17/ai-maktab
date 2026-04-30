@@ -4,7 +4,7 @@ import legacy from '@vitejs/plugin-legacy'
 
 // https://vite.dev/config/
 export default defineConfig({
-  base: '', // Empty string for relative path support across all environments
+  base: './', // Using relative paths for maximum compatibility with GitHub Pages and Telegram
   plugins: [
     react(),
     legacy({
