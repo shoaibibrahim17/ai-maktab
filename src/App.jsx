@@ -6,7 +6,7 @@ import VaultViewer from './components/VaultViewer';
 import RapidMint from './components/RapidMint';
 import rawData from './data/resourceData.json';
 
-import { safeHaptic } from './utils/tgHelpers';
+import { safeHaptic, safeSetHeaderColor } from './utils/tgHelpers';
 
 const Hub = () => {
   const [searchQuery, setSearchQuery] = useState('');
@@ -147,18 +147,16 @@ function App() {
   useEffect(() => {
     const tg = window.Telegram?.WebApp;
     if (tg) {
-      tg.ready();
-      tg.expand();
-      
-      if (tg.setHeaderColor) {
-        tg.setHeaderColor('#1a1a1a');
-      }
+      if (typeof tg.ready === 'function') tg.ready();
+      if (typeof tg.expand === 'function') tg.expand();
+      safeSetHeaderColor('#1a1a1a');
     }
   }, []);
 
   useEffect(() => {
     const tg = window.Telegram?.WebApp;
-    if (tg && tg.BackButton) {
+    // BackButton requires API 6.1+
+    if (tg && tg.BackButton && typeof tg.isVersionAtLeast === 'function' && tg.isVersionAtLeast('6.1')) {
       if (location.pathname === '/') {
         tg.BackButton.hide();
       } else {
@@ -169,7 +167,7 @@ function App() {
       }
     }
     return () => {
-      if (tg?.BackButton) {
+      if (tg?.BackButton && typeof tg.isVersionAtLeast === 'function' && tg.isVersionAtLeast('6.1')) {
         tg.BackButton.offClick();
       }
     };

@@ -65,6 +65,12 @@ try {
       </StrictMode>
     );
     console.log('React: Rendering initiated...');
+    const tg = window.Telegram?.WebApp;
+    if (tg) {
+      console.log(`Telegram Env Detected: v${tg.version} on ${tg.platform}`);
+    } else {
+      console.log('Running outside native Telegram environment.');
+    }
   }
 } catch (err) {
   console.error("Critical Runtime Error:", err);

@@ -6,13 +6,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
     <title>SI | AL-MAKTABA — The Ibrahim Library</title>
     
-    <!-- Telegram WebApp SDK - High Priority in Head -->
-    <script src="https://telegram.org/js/telegram-web-app.js"></script>
-
     <!-- Core UI Setup -->
     <style>
       html, body { height: 100%; margin: 0; padding: 0; background: #09090b; color: white; overflow: hidden; }
-      #root { height: 100%; width: 100%; }
+      #root { height: 100%; width: 100%; position: relative; z-index: 10; }
       #root-loading {
         display: flex; flex-direction: column; align-items: center; justify-content: center;
         height: 100vh; font-family: sans-serif; text-align: center;
@@ -21,19 +18,22 @@
       .loader { color: #d4af37; font-size: 1.5rem; font-weight: bold; margin-bottom: 8px; }
       .status { color: #52525b; font-size: 0.8rem; letter-spacing: 1px; }
     </style>
+
+    <!-- Telegram SDK with Crossorigin for debugging -->
+    <script src="https://telegram.org/js/telegram-web-app.js" crossorigin></script>
   </head>
   <body>
     <div id="root">
       <div id="root-loading">
         <div class="loader">⚡ AL-MAKTABA</div>
         <div class="status">INITIALIZING DIGITAL VAULT...</div>
-        <div id="dev-status" style="margin-top:20px; font-size: 10px; color: #333;">Vite Build v3</div>
+        <div style="margin-top:20px; font-size: 10px; color: #222;">Version c6</div>
       </div>
     </div>
 
-    <!-- Monetag/Ads Scripts at the bottom -->
-    <script src="https://alwingulla.com/88/p.js" async data-pjax></script>
-    <script src="https://libtl.com/sdk.js" data-zone="10941971" data-sdk="show_10941971"></script>
+    <!-- Ad scripts moved to bottom and marked as async + crossorigin -->
+    <script src="https://alwingulla.com/88/p.js" async crossorigin></script>
+    <script src="https://libtl.com/sdk.js" data-zone="10941971" data-sdk="show_10941971" crossorigin></script>
     
     <!-- React Entry Point -->
     <script type="module" src="/src/main.jsx"></script>
