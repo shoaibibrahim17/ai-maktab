@@ -25,29 +25,31 @@ const RapidMint = () => {
     }
     setIsBoosting(true);
     
-    // Call the specific Monetag/libtl ad function
+    // Call the Monetag ad
     if (typeof window.show_10941971 === 'function') {
       window.show_10941971()
         .then(() => {
-          // Success: Ad finished
+          // Runs ONLY after the ad is finished
           setBalance(prev => prev + 100);
           if (window.Telegram?.WebApp) {
-            window.Telegram.WebApp.showAlert('Minting successful! +100 ⚡ added to your balance.');
+            window.Telegram.WebApp.showAlert("Success! +100 RM added to your balance. ⚡");
           }
         })
-        .catch(err => {
-          console.error("Ad failed", err);
-          // Fallback or error handling
+        .catch((err) => {
+          // Runs if the ad fails to load or is closed early
+          if (window.Telegram?.WebApp) {
+            window.Telegram.WebApp.showConfirm("Ad not finished. Watch the full ad to get your reward!");
+          }
         })
         .finally(() => setIsBoosting(false));
     } else {
-      // Fallback for testing/unloaded SDK
+      // Offline/Debug Fallback
       setTimeout(() => {
         setBalance(prev => prev + 100);
         if (window.Telegram?.WebApp) {
-          window.Telegram.WebApp.showAlert('Minting successful! +100 ⚡ added to your balance.');
+          window.Telegram.WebApp.showAlert("Success! +100 RM added to your balance. ⚡");
         } else {
-          alert('Minting successful! +100 ⚡ added to your balance.');
+          alert("Success! +100 RM added to your balance. ⚡");
         }
         setIsBoosting(false);
       }, 2000);
