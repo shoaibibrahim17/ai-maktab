@@ -93,10 +93,10 @@ const ResourceCard = ({ title, description, icon, slug, label }) => {
 
       <button
         onClick={handleLaunch}
-        className="launch-btn w-full mt-4 flex items-center justify-center gap-2"
+        className="launch-btn w-full mt-4"
         style={{ marginTop: 'auto' }}
       >
-        View Module ⚡
+        Unveil Wisdom (<span className="arabic-text">اكشف الحكمة</span>) ↗
       </button>
     </motion.div>
   );
