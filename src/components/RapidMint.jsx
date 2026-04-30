@@ -7,15 +7,24 @@ const RapidMint = () => {
   
   // Use localStorage as primary storage (API 6.0 compatible)
   const [balance, setBalance] = useState(() => {
-    const saved = localStorage.getItem('rapidmint_balance');
-    return saved ? parseInt(saved, 10) : 0;
+    try {
+      const saved = localStorage.getItem('rapidmint_balance');
+      return saved ? parseInt(saved, 10) : 0;
+    } catch (e) {
+      console.warn("LocalStorage access denied:", e);
+      return 0;
+    }
   });
   const [isBoosting, setIsBoosting] = useState(false);
   const [multiplier, setMultiplier] = useState(1);
   const [isSuperBoosting, setIsSuperBoosting] = useState(false);
 
   useEffect(() => {
-    localStorage.setItem('rapidmint_balance', balance.toString());
+    try {
+      localStorage.setItem('rapidmint_balance', balance.toString());
+    } catch (e) {
+      console.warn("LocalStorage write denied:", e);
+    }
   }, [balance]);
 
   useEffect(() => {

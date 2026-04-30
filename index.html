@@ -2,35 +2,35 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" type="image/svg+xml" href="./favicon.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
     <title>SI | AL-MAKTABA — The Ibrahim Library</title>
-    <!-- Monetag Smart Tag -->
-    <script src="https://alwingulla.com/88/p.js" async data-pjax></script>
-    <!-- Ad SDK -->
-    <script src='//libtl.com/sdk.js' data-zone='10941971' data-sdk='show_10941971'></script>
-    <!-- Telegram WebApp -->
-    <script src="https://telegram.org/js/telegram-web-app.js"></script>
+    
+    <!-- Core UI Setup -->
+    <style>
+      body { background: #09090b; margin: 0; padding: 0; color: white; transition: background 0.3s ease; }
+      #root-loading {
+        display: flex; flex-direction: column; align-items: center; justify-content: center;
+        height: 100vh; font-family: sans-serif; text-align: center;
+      }
+      .loader { color: #d4af37; font-size: 1.5rem; font-weight: bold; margin-bottom: 8px; }
+      .status { color: #52525b; font-size: 0.8rem; letter-spacing: 1px; }
+    </style>
   </head>
-  <body style="background: #1a1a1a; margin: 0; padding: 0; color: white;">
+  <body>
     <div id="root">
-      <div id="debug-overlay" style="padding: 40px; font-family: sans-serif; text-align: center; border: 2px solid #22c55e; margin: 20px; border-radius: 10px;">
-        <h1 style="font-size: 2rem; color: #22c55e;">⚡ AI-MAKTABA</h1>
-        <p style="opacity: 0.8;">Loading Secure Vault...</p>
-        <div style="margin-top: 20px; font-size: 0.7rem; opacity: 0.4;">
-          Status: Core HTML Loaded (Relative Mode)
-        </div>
+      <div id="root-loading">
+        <div class="loader">⚡ AL-MAKTABA</div>
+        <div class="status">INITIALIZING SECURE VAULT...</div>
       </div>
     </div>
 
-    <!-- Move scripts to bottom for non-blocking render -->
-    <!-- Telegram WebApp -->
+    <!-- Scripts at the bottom for optimized loading -->
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
-    <!-- Monetag Smart Tag -->
     <script src="https://alwingulla.com/88/p.js" async data-pjax></script>
-    <!-- Ad SDK -->
-    <script src='https://libtl.com/sdk.js' data-zone='10941971' data-sdk='show_10941971'></script>
-    <!-- React Entry -->
+    <script src="https://libtl.com/sdk.js" data-zone="10941971" data-sdk="show_10941971"></script>
+    
+    <!-- React Entry Point -->
     <script type="module" src="./src/main.jsx"></script>
   </body>
 </html>
