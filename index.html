@@ -13,7 +13,12 @@
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
   </head>
   <body>
-    <div id="root"></div>
-    <script type="module" src="src/main.jsx"></script>
+    <div id="root">
+      <div id="debug-overlay" style="color: white; padding: 20px; font-family: sans-serif;">
+        <h1 style="font-size: 1.2rem;">⚡ AI-MAKTABA Initializing...</h1>
+        <p style="font-size: 0.8rem; opacity: 0.5;">If this screen stays for more than 5 seconds, please check your internet connection or restart the bot.</p>
+      </div>
+    </div>
+    <script type="module" src="/src/main.jsx"></script>
   </body>
 </html>

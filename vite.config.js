@@ -3,6 +3,6 @@ import react from '@vitejs/plugin-react'
 
 // https://vite.dev/config/
 export default defineConfig({
-  base: './', // Use relative paths for better portability on GH Pages
+  base: '/ai-maktab/', // Explicitly match repository name for GH Pages subpath
   plugins: [react()],
 })
