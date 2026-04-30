@@ -18,12 +18,24 @@
   box-sizing: border-box;
 }
 
+.min-h-screen { 
+  min-height: 100vh; 
+  min-height: -webkit-fill-available; 
+}
+#root {
+  min-height: 100vh;
+  min-height: -webkit-fill-available;
+  display: flex;
+  flex-direction: column;
+}
 body {
   font-family: 'Inter', sans-serif;
   background-color: var(--background);
   color: var(--on-surface);
   overflow-x: hidden;
   -webkit-font-smoothing: antialiased;
+  min-height: 100vh;
+  min-height: -webkit-fill-available;
 }
 
 h1, h2, h3, h4 {
