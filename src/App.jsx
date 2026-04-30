@@ -22,6 +22,19 @@ const Hub = () => {
     if (window.Telegram?.WebApp) {
       window.Telegram.WebApp.expand();
     }
+    
+    // Initialize Monetag In-App Interstitials
+    if (typeof window.show_10941971 === 'function') {
+      window.show_10941971({
+        type: 'inApp',
+        inAppSettings: {
+          frequency: 3,
+          interval: 120, // 2 minutes
+          timeout: 45,   // First ad after 45s
+          everyPage: false
+        }
+      }).catch(err => console.warn("In-app ad swallowed:", err));
+    }
   }, []);
 
   const filteredResources = resources.filter(resource =>
