@@ -67,11 +67,11 @@ const Hub = () => {
   const categories = [...new Set(filteredResources.map(r => r.category))];
 
   return (
-    <div className="min-h-screen">
+    <div className="min-h-screen flex flex-col">
       <div className="star-field" />
       <Header searchQuery={searchQuery} setSearchQuery={setSearchQuery} />
 
-      <main className="max-w-6xl mx-auto px-6 py-12 relative z-10 w-full" style={{ paddingTop: '2rem' }}>
+      <main className="max-w-7xl mx-auto px-4 md:px-6 py-8 md:py-12 relative z-10 w-full flex-grow">
         <section
           className="mb-16 animate-fade-in-up"
         >

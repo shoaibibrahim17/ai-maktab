@@ -20,22 +20,28 @@
 
 .min-h-screen { 
   min-height: 100vh; 
-  min-height: -webkit-fill-available; 
+  /* Safe area and TMA fallbacks */
+  min-height: 100svh;
 }
 #root {
   min-height: 100vh;
-  min-height: -webkit-fill-available;
+  min-height: 100svh;
   display: flex;
   flex-direction: column;
+  overflow: visible; /* Allow content to dictate height */
 }
 body {
   font-family: 'Inter', sans-serif;
   background-color: var(--background);
   color: var(--on-surface);
-  overflow-x: hidden;
-  -webkit-font-smoothing: antialiased;
+  margin: 0;
+  padding: 0;
   min-height: 100vh;
-  min-height: -webkit-fill-available;
+  min-height: 100svh;
+  overflow-x: hidden;
+  overflow-y: auto; /* Explicitly allow vertical scroll */
+  -webkit-overflow-scrolling: touch; /* Smooth iOS/TMA scroll */
+  -webkit-font-smoothing: antialiased;
 }
 
 h1, h2, h3, h4 {
@@ -242,9 +248,16 @@ h1, h2, h3, h4 {
 /* Auto-fit responsive card grid */
 .card-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-  gap: 2rem;
+  grid-template-columns: repeat(auto-fit, minmax(290px, 1fr));
+  gap: 1.5rem; /* Slightly tighter gap for mobile space */
   width: 100%;
+}
+
+@media (max-width: 360px) {
+  .card-grid {
+    grid-template-columns: 1fr; /* Force single column on tiny screens */
+    gap: 1rem;
+  }
 }
 .text-center { text-align: center; }
 .text-lg { font-size: 1.125rem; }
