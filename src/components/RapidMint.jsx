@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { safeNotify, safeHaptic, safeSuccessHaptic } from '../utils/tgHelpers';
+import { safeNotify, safeHaptic, safeSuccessHaptic, getTelegram } from '../utils/tgHelpers';
 
 const RapidMint = () => {
   const navigate = useNavigate();
@@ -22,8 +22,16 @@ const RapidMint = () => {
   useEffect(() => {
     try {
       localStorage.setItem('rapidmint_balance', balance.toString());
+      
+      // Sync to Telegram CloudStorage if available
+      const tg = getTelegram();
+      if (tg && tg.CloudStorage) {
+        tg.CloudStorage.setItem('rapidmint_balance', balance.toString(), (err, success) => {
+          if (err) console.warn("CloudStorage save failed", err);
+        });
+      }
     } catch (e) {
-      console.warn("LocalStorage write denied:", e);
+      console.warn("Storage write denied:", e);
     }
   }, [balance]);
 

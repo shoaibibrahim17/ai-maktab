@@ -6,7 +6,7 @@ import VaultViewer from './components/VaultViewer';
 import RapidMint from './components/RapidMint';
 import rawData from './data/resourceData.json';
 
-import { safeHaptic, safeSetHeaderColor } from './utils/tgHelpers';
+import { safeHaptic, safeSetHeaderColor, getTelegram } from './utils/tgHelpers';
 
 const Hub = () => {
   const [searchQuery, setSearchQuery] = useState('');
@@ -18,6 +18,28 @@ const Hub = () => {
       return [...acc, ...category.resources.map(r => ({ ...r, category: category.category }))];
     }, []);
     setResources(flattened);
+  }, []);
+
+  useEffect(() => {
+    // Sync Telegram CloudStorage to LocalStorage
+    const syncStorage = async () => {
+      const tg = getTelegram();
+      if (tg && tg.CloudStorage) {
+        try {
+          // Attempt to get the balance from CloudStorage
+          tg.CloudStorage.getItem('rapidmint_balance', (err, value) => {
+            if (!err && value) {
+              localStorage.setItem('rapidmint_balance', value);
+              // Trigger a storage event or state update if needed
+              window.dispatchEvent(new Event('storage'));
+            }
+          });
+        } catch (e) {
+          console.warn("Telegram CloudStorage sync failed:", e);
+        }
+      }
+    };
+    syncStorage();
   }, []);
 
   useEffect(() => {
