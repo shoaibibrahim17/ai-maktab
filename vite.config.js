@@ -4,7 +4,7 @@ import legacy from '@vitejs/plugin-legacy'
 
 // https://vite.dev/config/
 export default defineConfig({
-  base: './', // Use relative paths for better compatibility across different deployment URLs
+  base: '/ai-maktab/', // Correctly set to match your repository name for GitHub Pages
   plugins: [
     react(),
     legacy({
