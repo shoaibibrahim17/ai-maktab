@@ -1,35 +1,5 @@
 console.log('App initialization started...');
 
-// ON-SCREEN CONSOLE FOR TELEGRAM DEBUGGING
-// This will show logs directly on the phone screen
-const logBuffer = [];
-const consoleDiv = document.createElement('div');
-consoleDiv.id = 'on-screen-console';
-Object.assign(consoleDiv.style, {
-  position: 'fixed', bottom: '0', left: '0', width: '100%', 
-  height: '150px', background: 'rgba(0,0,0,0.85)', color: '#00ff00',
-  fontSize: '10px', fontFamily: 'monospace', overflowY: 'auto',
-  zIndex: '10000', padding: '10px', pointerEvents: 'none',
-  borderTop: '1px solid #333', display: 'none' // Hidden by default, shown on error
-});
-document.body.appendChild(consoleDiv);
-
-const originalLog = console.log;
-const originalError = console.error;
-console.log = (...args) => {
-  originalLog(...args);
-  const msg = args.map(a => typeof a === 'object' ? JSON.stringify(a) : String(a)).join(' ');
-  consoleDiv.innerHTML += `<div>LOG: ${msg}</div>`;
-  consoleDiv.scrollTop = consoleDiv.scrollHeight;
-};
-console.error = (...args) => {
-  consoleDiv.style.display = 'block'; // Show console on error
-  originalError(...args);
-  const msg = args.map(a => typeof a === 'object' ? JSON.stringify(a) : String(a)).join(' ');
-  consoleDiv.innerHTML += `<div style="color:#ff5555">ERR: ${msg}</div>`;
-  consoleDiv.scrollTop = consoleDiv.scrollHeight;
-};
-
 // Global Error Catcher
 window.onerror = (msg, url, line) => {
   console.error(`Global Error: ${msg} at ${url}:${line}`);
